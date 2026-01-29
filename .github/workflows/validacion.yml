@@ -1,0 +1,19 @@
+[cite_start]name: Flujo_trabajo_Token # [cite: 678]
+
+on:
+  push:
+    branches:
+      - [cite_start]main # [cite: 683]
+
+jobs:
+  validar-auth:
+    [cite_start]runs-on: ubuntu-latest # [cite: 690]
+    steps:
+      - name: Checkout code
+        [cite_start]uses: actions/checkout@v3 # [cite: 695]
+
+      - name: Use Personal Access Token
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/user/repos # [cite: 734, 736]
