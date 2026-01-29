@@ -1,19 +1,30 @@
-[cite_start]name: Flujo_trabajo # [cite: 678]
-
-[cite_start]on: # [cite: 680]
-  [cite_start]push: # [cite: 681]
+name: Flujo_trabajo # nombre del flujo de trabajo
+# evento que activa el flujo de trabajo 
+on:
+  push:
     branches:
-      - [cite_start]main # [cite: 683]
+      - main
+# El flujo se ejecutará cada vez que haya un push (es decir, una actualización o un nuevo commit) a la rama main.
+# configuración del trabajo
 
-[cite_start]jobs: # [cite: 686]
-  [cite_start]validar-auth: # [cite: 688]
-    [cite_start]runs-on: ubuntu-latest # [cite: 690]
-    [cite_start]steps: # [cite: 691]
-      - [cite_start]name: Checkout code # [cite: 694]
-        [cite_start]uses: actions/checkout@v3 # [cite: 695]
-
-      - [cite_start]name: Use Personal Access Token # [cite: 731]
-        run: | [cite_start]# [cite: 733]
-          curl -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+jobs:
+# Identificador del trabajo (job) dentro del flujo de trabajo.
+  example-job:
+   # El job se ejecutará en un runner con el sistema operativo Ubuntu en su última versión.
+    runs-on: ubuntu-latest
+    # Pasos del job
+    steps:
+      # Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+      # Este paso utiliza la acción oficial actions/checkout en su versión 3.
+      # Clona el código fuente del repositorio en el runner para que pueda ser utilizado por otros pasos.
+      # Uso del GITHUB_TOKEN
+      - name: Use GITHUB_TOKEN
+      # Ejecuta el comando curl para realizar una llamada a la API de GitHub.
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                -H "Accept: application/vnd.github.v3+json" \
-               [cite_start]https://api.github.com/user/repos # [cite: 734, 735, 736]
+               https://api.github.com/user/repos
+# GITHUB_TOKEN se genera automáticamente para cada ejecución del flujo y tiene permisos predeterminados para interactuar con el repositorio.
+# versión 3 de la API de GitHub.
